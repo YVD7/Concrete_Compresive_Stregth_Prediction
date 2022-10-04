@@ -1,0 +1,10 @@
+
+
+
+data_ingestion_config:
+  dataset_download_url: https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength 
+  raw_data_dir: raw_data
+  zip_download_dir: zip_data
+  ingested_dir: ingested_data
+  ingested_train_dir: train
+  ingested_test_dir: test

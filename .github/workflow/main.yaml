@@ -1,0 +1,54 @@
+# Your workflow name
+
+name: Deploy to AWS
+
+# Run workflow on every push to main branch.
+on:
+  push:
+      branches: [main]
+
+# Your workflows jobs
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # check-out your repository.
+    - name: Checkout
+      uses: actions/chekcout@v2
+
+###   IMPORTANT PART ###  
+
+    - name: Build, Push are Release a Docker conatiner to AWS. # Your custom step name
+      uses: gonuit/AWS-docker-deploy@v1.3.3 # git hub action name (leave it as it is).
+      with:
+        # below you must provide variable for your GCP,AWS,AZURE app
+
+        # The email address associated with your GCP,AWS,Azure account.
+        # email: my.email@example.com
+        email: $({secrets.AWS_EMAIL})
+
+
+        # AWS/GCP/Azure API key associated with provided user's email.
+        # Api key is available under your AWS/GCP/Azure account setting.
+        AWS_api_key: $({secrets.AWS_API_KEY})
+
+        # Name of AWS/GCP/Azure application to which the build is to be sent.
+        AWS_app_name: $({secrets.AWS_APP_NAME})
+
+        # (Optional, default: "./")
+        # Dockerfile directory.
+        # For example, if you have a Dockerfile in the root of your project, leave it as follows:
+        dockerfile_directory: ./
+
+        # (Optional, default: "")
+        # Dockerfile name
+        dockerfile_name: Dockerfile
+
+        # (Optional, default: " ")
+        # Additional options of docker build coommand.
+        docker_options: "--no-cache"
+
+        # (Optional, default: "Web")
+        # select the process type for which you want the docker conatianer to be uploaded
+        # by default, this  argument is set to "web"
+        process_type: web
